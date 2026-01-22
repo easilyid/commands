@@ -232,5 +232,7 @@ Copyright (c) 2025 [guda.studio](mailto:gudaclaude@gmail.com)
 
 ## 用 🌟 为本项目助力~
 
+[![Star History Chart](https://api.star-history.com/svg?repos=GuDaStudio/commands&type=date&legend=top-left)](https://www.star-history.com/#GuDaStudio/commands&type=date&legend=top-left)
+
 </div>
 
