@@ -33,10 +33,10 @@ tags: [gudaspec, research, constraints, exploration, subagents]
 
 2. **Define Exploration Boundaries (Context-Based Division)**
    - Identify natural context boundaries in the codebase (NOT functional roles).
-   - Example divisions:
-     * Subagent 1: User domain code (user models, user services, user UI)
-     * Subagent 2: Authentication & authorization code (auth middleware, session, tokens)
-     * Subagent 3: Configuration & infrastructure (configs, deployments, build scripts)
+   - Example divisions (adapt to project type):
+     * Subagent 1: Core domain logic (business rules, state management, data models)
+     * Subagent 2: External interfaces (network protocols, API handlers, I/O operations)
+     * Subagent 3: Infrastructure & configuration (build scripts, configs, deployment)
    - Each boundary should be self-contained: no cross-communication needed between subagents.
    - Define exploration scope and expected output for each subagent.
 
