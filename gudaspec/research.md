@@ -7,6 +7,7 @@ tags: [gudaspec, research, constraints, exploration, subagents]
 
 <!-- GUDASPEC:RESEARCH:START -->
 **Core Philosophy**
+- If the project is detected to lack `./openspec/` dir, prompt the user to initialize the project using `/gudaspec:init`.
 - Research produces **constraint sets**, not information dumps. Each constraint narrows the solution space.
 - Constraints tell subsequent stages "don't consider this direction," enabling mechanical execution without decisions.
 - The output is "約束集合 + 可验证的成功判据" (constraint sets + verifiable success criteria).
@@ -23,7 +24,7 @@ tags: [gudaspec, research, constraints, exploration, subagents]
 
 **Steps**
 0. **Generate OpenSpec Proposal**
-   - Run `/openspec:proposal`
+   - Run `/opsx:explore <user question>` always first.
 
 1. **Initial Codebase Assessment**
    - Combine user requirements with quick codebase scan using `mcp__auggie-mcp__codebase-retrieval`.
@@ -39,6 +40,7 @@ tags: [gudaspec, research, constraints, exploration, subagents]
      * Subagent 3: Configuration & infrastructure (configs, deployments, build scripts)
    - Each boundary should be self-contained: no cross-communication needed between subagents.
    - Define exploration scope and expected output for each subagent.
+   - The subagent takes forever to run, forcing you to wait—absolutely nothing else can be done until the subagent's results are fully obtained.
 
 3. **Prepare Standardized Output Template**
    - Define a unified JSON schema that all Explore subagents must follow:
@@ -84,23 +86,12 @@ tags: [gudaspec, research, constraints, exploration, subagents]
    - Update constraint sets with confirmed decisions.
 
 7. **Generate OpenSpec Proposal**
-   - Run `/openspec:proposal <requirement-description>` to scaffold formal spec.
-   - Transform finalized constraint sets into requirements format.
-   - Structure as:
-     * **Context**: User need + discovered constraints
-     * **Requirements**: Each constraint becomes a requirement with scenario
-     * **Success Criteria**: Derived from aggregated hints and user confirmations
-   - Ensure proposal includes:
-     * All discovered constraints as requirements.
-     * Verifiable scenarios for each requirement.
-     * Clear dependencies and sequencing.
-     * Risk mitigation strategies.
+   - Run `/opsx:ff <requirement-description>` and follow it.
+   - When generate `proposal.md`, strictly prohibit abbreviating user requirements; only expansion is allowed. The generated document MUST NOT contain any ambiguous content. For example, specific project files mentioned by the user must be accurately referenced down to the file path, and should not be abbreviated in a way that misleads document readers into thinking it refers to an online-searched project rather than a local one.
 
 **Reference**
-- Review existing constraints: `rg -n "Constraint:|MUST|MUST NOT" openspec/specs`
 - Inspect codebase structure: `ls -R` or `mcp__auggie-mcp__codebase-retrieval`
-- Check prior research outputs: `ls openspec/changes/*/research-output.md`
 - Validate subagent outputs conform to template before aggregation.
 - Use `AskUserQuestions` for ANY ambiguity—do not assume or guess.
-
+- Always base judgments on project codes, strictly prohibiting the use of general knowledge for speculation. It is permissible to indicate uncertainty to users.
 <!-- GUDASPEC:RESEARCH:END -->
