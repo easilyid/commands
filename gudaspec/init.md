@@ -34,7 +34,31 @@ tags: [openspec, init, setup, mcp]
    - Verify that `openspec/` directory structure is created successfully.
    - Report any initialization errors and suggest remediation steps.
 
-4. **Validate MCP Tools Availability**
+4. **Configure Multi-Language Support**
+   - Ask the user which language they prefer for generated artifacts (default: English).
+   - If non-English is selected, edit `openspec/config.yaml` to add language context:
+     ```yaml
+     schema: spec-driven
+
+     context: |
+       语言：中文（简体）
+       所有产出物必须用简体中文撰写。
+       技术术语（如 API、REST、GraphQL）保留英文。
+       代码示例和文件路径保持英文。
+     ```
+   - Supported language examples:
+     - **Chinese (Simplified)**: `语言：中文（简体）\n所有产出物必须用简体中文撰写。`
+     - **Japanese**: `言語：日本語\nすべての成果物は日本語で作成してください。`
+     - **Spanish**: `Idioma: Español\nTodos los artefactos deben escribirse en español.`
+     - **Portuguese (Brazil)**: `Language: Portuguese (pt-BR)\nAll artifacts must be written in Brazilian Portuguese.`
+   - If `config.yaml` already has a `context` field, append the language instruction to it.
+   - Verify the configuration by running:
+     ```bash
+     openspec instructions proposal --change test-change
+     ```
+   - The output should include the language context.
+
+5. **Validate MCP Tools Availability**
    - Check if `mcp__codex__codex` tool is available and responsive.
    - Check if `mcp__gemini__gemini` tool is available and responsive.
    - Check if `mcp__augment-context-engine__codebase-retrieval` tool is available and responsive.
@@ -44,10 +68,11 @@ tags: [openspec, init, setup, mcp]
      - **Augment Context Engine**: "The `mcp__augment-context-engine__codebase-retrieval` tool is not available. This tool is MANDATORY for Research phase. Please install it from: https://www.augmentcode.com/"
    - Explain that these MCP tools will be required for subsequent GudaSpec workflows.
 
-5. **Summary Report**
+6. **Summary Report**
    - Display a summary of the initialization status:
      - OpenSpec installation: ✓/✗
      - Project initialization: ✓/✗
+     - Multi-language configuration: ✓/✗ (language name)
      - `mcp__codex__codex` availability: ✓/✗
      - `mcp__gemini__gemini` availability: ✓/✗
      - `mcp__augment-context-engine__codebase-retrieval` availability: ✓/✗
@@ -55,6 +80,8 @@ tags: [openspec, init, setup, mcp]
 
 **Reference**
 - OpenSpec CLI documentation: Run `openspec --help` for available commands.
+- OpenSpec Multi-Language Guide: https://github.com/Fission-AI/OpenSpec/blob/main/docs/multi-language.md
+- OpenSpec Customization Guide: https://github.com/Fission-AI/OpenSpec/blob/main/docs/customization.md
 - Codex MCP installation: https://github.com/GuDaStudio/codexmcp
 - Gemini MCP installation: https://github.com/GuDaStudio/geminimcp
 - Augment Context Engine: https://www.augmentcode.com/
