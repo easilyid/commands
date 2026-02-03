@@ -1,11 +1,11 @@
 ---
-name: GudaSpec Research
+name: GudaSpec: Research
 description: Transform user requirements into constraint sets through parallel exploration and analysis
 category: GudaSpec
 tags: [gudaspec, research, constraints, exploration, subagents]
 ---
 
-<!-- GUDASPEC:RESEARCH:START -->
+<!-- GUDASPEC:START -->
 **Core Philosophy**
 - If the project is detected to lack `./openspec/` dir, prompt the user to initialize the project using `/gudaspec:init`.
 - Research produces **constraint sets**, not information dumps. Each constraint narrows the solution space.
@@ -23,7 +23,7 @@ tags: [gudaspec, research, constraints, exploration, subagents]
 - Do not make architectural decisions—surface constraints that guide decisions.
 
 **Steps**
-0. **Generate OpenSpec Proposal**
+0. **Initialize OpenSpec Exploration**
    - Run `/opsx:explore <user question>` always first.
 
 1. **Initial Codebase Assessment**
@@ -40,7 +40,7 @@ tags: [gudaspec, research, constraints, exploration, subagents]
      * Subagent 3: Infrastructure & configuration (build scripts, configs, deployment)
    - Each boundary should be self-contained: no cross-communication needed between subagents.
    - Define exploration scope and expected output for each subagent.
-   - The subagent takes forever to run, forcing you to wait—absolutely nothing else can be done until the subagent's results are fully obtained.
+   - **Note**: Subagent execution is blocking; wait for all results before proceeding to aggregation.
 
 3. **Prepare Standardized Output Template**
    - Define a unified JSON schema that all Explore subagents must follow:
@@ -76,8 +76,20 @@ tags: [gudaspec, research, constraints, exploration, subagents]
    - Identify **open questions** from all reports that require user clarification.
    - Synthesize **success criteria** from scenario hints across all contexts.
 
-6. **User Interaction for Ambiguity Resolution**
-   - Compile prioritized list of open questions from aggregated reports.
+6. **Multi-Model Constraint Validation (Conditional)**
+   - **Trigger conditions** (enable when ANY applies):
+     * Aggregated constraints have high uncertainty or conflicting signals
+     * Cross-module dependencies are complex (>3 modules involved)
+     * User requirements touch security, concurrency, or distributed systems
+     * Subagent reports contain unresolved contradictions
+   - When triggered, invoke both MCP tools for cross-validation:
+     * Use `mcp__gemini__gemini`: "Review these aggregated constraints for system-level blind spots. Identify architectural constraints that single-module exploration may have missed. Focus on: cross-cutting concerns, implicit coupling, scalability boundaries. Output format: [BLIND_SPOT] <description> → [CONSTRAINT_TO_ADD] <specification>."
+     * Use `mcp__codex__codex`: "Analyze these constraints for implementation-level gaps. Identify low-level technical constraints that high-level exploration overlooked. Focus on: API contracts, error propagation paths, resource lifecycle. Output format: [GAP] <description> → [CONSTRAINT_TO_ADD] <specification>."
+   - Merge model outputs into constraint sets; resolve conflicts by escalating to user.
+   - **Skip this step** if exploration was straightforward and constraints are clear.
+
+7. **User Interaction for Ambiguity Resolution**
+   - Compile prioritized list of open questions from aggregated reports (including multi-model validation findings).
    - Use `AskUserQuestions` tool to present questions systematically:
      * Group related questions together.
      * Provide context for each question.
@@ -85,7 +97,7 @@ tags: [gudaspec, research, constraints, exploration, subagents]
    - Capture user responses as additional constraints.
    - Update constraint sets with confirmed decisions.
 
-7. **Generate OpenSpec Proposal**
+8. **Generate OpenSpec Proposal**
    - Run `/opsx:ff <requirement-description>` and follow it.
    - When generate `proposal.md`, strictly prohibit abbreviating user requirements; only expansion is allowed. The generated document MUST NOT contain any ambiguous content. For example, specific project files mentioned by the user must be accurately referenced down to the file path, and should not be abbreviated in a way that misleads document readers into thinking it refers to an online-searched project rather than a local one.
 
@@ -94,4 +106,4 @@ tags: [gudaspec, research, constraints, exploration, subagents]
 - Validate subagent outputs conform to template before aggregation.
 - Use `AskUserQuestions` for ANY ambiguity—do not assume or guess.
 - Always base judgments on project codes, strictly prohibiting the use of general knowledge for speculation. It is permissible to indicate uncertainty to users.
-<!-- GUDASPEC:RESEARCH:END -->
+<!-- GUDASPEC:END -->

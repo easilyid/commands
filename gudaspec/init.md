@@ -37,9 +37,11 @@ tags: [openspec, init, setup, mcp]
 4. **Validate MCP Tools Availability**
    - Check if `mcp__codex__codex` tool is available and responsive.
    - Check if `mcp__gemini__gemini` tool is available and responsive.
+   - Check if `mcp__augment-context-engine__codebase-retrieval` tool is available and responsive.
    - For each unavailable tool, display a clear warning message with installation instructions:
      - **Codex MCP**: "The `mcp__codex__codex` tool is not available. Please install it from: https://github.com/GuDaStudio/codexmcp"
      - **Gemini MCP**: "The `mcp__gemini__gemini` tool is not available. Please install it from: https://github.com/GuDaStudio/geminimcp"
+     - **Augment Context Engine**: "The `mcp__augment-context-engine__codebase-retrieval` tool is not available. This tool is MANDATORY for Research phase. Please install it from: https://www.augmentcode.com/"
    - Explain that these MCP tools will be required for subsequent GudaSpec workflows.
 
 5. **Summary Report**
@@ -48,12 +50,14 @@ tags: [openspec, init, setup, mcp]
      - Project initialization: ✓/✗
      - `mcp__codex__codex` availability: ✓/✗
      - `mcp__gemini__gemini` availability: ✓/✗
+     - `mcp__augment-context-engine__codebase-retrieval` availability: ✓/✗
    - If any components are missing, list the required actions before proceeding with other GudaSpec commands.
 
 **Reference**
 - OpenSpec CLI documentation: Run `openspec --help` for available commands.
 - Codex MCP installation: https://github.com/GuDaStudio/codexmcp
 - Gemini MCP installation: https://github.com/GuDaStudio/geminimcp
+- Augment Context Engine: https://www.augmentcode.com/
 - For Node.js/npm issues, ensure Node.js >= 18.x is installed.
 - On permission errors during global npm install, consider using `sudo` (Linux/macOS) or running terminal as Administrator (Windows), or configure npm to use a user-writable directory.
 <!-- GUDASPEC:END -->

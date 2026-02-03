@@ -21,6 +21,6 @@ tags: [openspec, implementation, multi-model, codex, gemini]
    - **Mandatory constraint**: When communicating with Codex/Gemini, the prompt **must explicitly require** returning a `Unified Diff Patch` only; external models are strictly forbidden from making any real file modifications.
 4. Upon receiving the diff patch from Codex/Gemini, **NEVER apply it directly**; rewrite the prototype by removing redundancy, ensuring clear naming and simple structure, aligning with project style, and eliminating unnecessary comments.
 5. Before applying any change, perform a mandatory side-effect review: verify the change does not exceed task scope, does not affect unrelated modules, and does not introduce new dependencies or break existing interfaces; make targeted corrections if issues are found.
-6. For each completed task, conduct multi-model reviews using Codex`mcp__codex__codex` / Gemini`mcp__gemini__gemini`, requiring iterative reviews until receiving dual-model **LGTM approval**.
+6. For each completed task, conduct multi-model reviews using Codex `mcp__codex__codex` / Gemini `mcp__gemini__gemini`, requiring iterative reviews until receiving dual-model **LGTM approval**.
 7. MUST follow the `/opsx:apply <proposal_id>`.
 <!-- GUDASPEC:END -->

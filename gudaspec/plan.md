@@ -21,7 +21,7 @@ argument-hint: [proposal_id]
 
 2. Run `/opsx:continue <proposal_id>` then follow it to review the current specs and improve quality of specs.
 
-3. During the review progress, invoke both MCP tools to detect remaining ambiguities:
+3. During the review process, invoke both MCP tools to detect remaining ambiguities:
    - Use `mcp__codex__codex` tool, e.g. "Review proposal <proposal_id> for decision points that remain unspecified. List each as: [AMBIGUITY] <description> → [REQUIRED CONSTRAINT] <what must be decided>."
    - Use `mcp__gemini__gemini` tool, e.g. "Identify implicit assumptions in proposal <proposal_id>. For each assumption, specify: [ASSUMPTION] <description> → [EXPLICIT CONSTRAINT NEEDED] <concrete specification>."
    - **Anti-Pattern Detection** (flag and reject):
@@ -37,9 +37,9 @@ argument-hint: [proposal_id]
 
 4. After clarifying requirements, modify the spec documents. For each change, you MUST run the command `openspec validate <proposal_id> --strict` to ensure the correct format.
 
-5. When backend logic modification requirements are identified, Invoke both MCP tools to derive testable invariants:
+5. When backend logic modification requirements are identified, invoke both MCP tools to derive testable invariants:
    - Use `mcp__codex__codex` tool, e.g. "Extract Property-Based Testing properties from proposal <proposal_id>. For each requirement, identify: [INVARIANT] <mathematical property that must always hold> → [FALSIFICATION STRATEGY] <how to generate test cases that attempt to break it>."
-   - Use `mcp__codex__codex` tool, e.g. "Analyze proposal <proposal_id> for system properties. Define: [PROPERTY] <name> | [DEFINITION] <formal description> | [BOUNDARY CONDITIONS] <edge cases to test> | [COUNTEREXAMPLE GENERATION] <approach>."
+   - Use `mcp__gemini__gemini` tool, e.g. "Analyze proposal <proposal_id> for system properties. Define: [PROPERTY] <name> | [DEFINITION] <formal description> | [BOUNDARY CONDITIONS] <edge cases to test> | [COUNTEREXAMPLE GENERATION] <approach>."
    - **PBT Property Categories to Extract**:
      - **Commutativity/Associativity**: Order-independent operations
      - **Idempotency**: Repeated operations yield same result
@@ -47,7 +47,7 @@ argument-hint: [proposal_id]
      - **Invariant Preservation**: State constraints maintained across operations
      - **Monotonicity**: Ordering guarantees (e.g., timestamps always increase)
      - **Bounds**: Value ranges, size limits, rate constraints
-   - After modify the spec documents with the PBT, MUST run the command `openspec validate <proposal_id> --strict` to ensure the correct format.
+   - After modifying the spec documents with the PBT, MUST run the command `openspec validate <proposal_id> --strict` to ensure the correct format.
 
 6. For complex proposals, consider running steps 2-4 iteratively on sub-components and remind the user rather than the entire proposal at once.
 
